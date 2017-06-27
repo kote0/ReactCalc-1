@@ -20,7 +20,7 @@ namespace ReactCalc
             if (args.Length >= 2)
             {
                 x = ToNumber(args[0], 70);
-                if (args.Length == 3)
+                if (args.Length >= 3)
                 {
                     y = ToNumber(args[1], 83);
                 }
@@ -44,19 +44,17 @@ namespace ReactCalc
                 #endregion
             }
 
-            switch (oper)
+            try
             {
-                case "divide":
-                    Console.WriteLine(String.Format("Divide = {0}", calc.Divide(x, y)));
-                    break;
-                case "sqrt":
-                    Console.WriteLine(String.Format("Sqrt = {0}", calc.Sqrt(x)));
-                    break;
-                case "sum":
-                default:
-                    Console.WriteLine(String.Format("Сумма = {0}", calc.Sum(x, y)));
-                    break;
+                var result = calc.Execute(oper, new[] { x, y });
+
+                Console.WriteLine(String.Format("{0} = {1}", oper, result));
             }
+            catch (NotSupportedException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
 
             Console.ReadKey();
         }
