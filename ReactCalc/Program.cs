@@ -12,14 +12,19 @@ namespace ReactCalc
         {
             Console.WriteLine("Hello, i'm Калькулятор");
 
-            int x = 0;
-            int y = 0;
+            var x = 0d;
+            var y = 0d;
             var calc = new Calc();
+            var oper = "sum";
 
-            if (args.Length == 2)
+            if (args.Length >= 2)
             {
-                x = ToInt(args[0], 70);
-                y = ToInt(args[1], 83);
+                x = ToNumber(args[0], 70);
+                if (args.Length == 3)
+                {
+                    y = ToNumber(args[1], 83);
+                }
+                oper = args.Last();
             }
             else
             {
@@ -27,18 +32,31 @@ namespace ReactCalc
 
                 Console.WriteLine("Введите Х");
                 var strx = Console.ReadLine();
-                x = ToInt(strx);
+                x = ToNumber(strx);
 
                 Console.WriteLine("Введите Y");
                 var stry = Console.ReadLine();
-                y = ToInt(stry, 99);
+                y = ToNumber(stry, 99);
+
+                Console.WriteLine("Введите операцию");
+                oper = Console.ReadLine();
 
                 #endregion
             }
 
-            var result = calc.Sum(x, y);
-
-            Console.WriteLine("Сумма = " + result.ToString());
+            switch (oper)
+            {
+                case "divide":
+                    Console.WriteLine(String.Format("Divide = {0}", calc.Divide(x, y)));
+                    break;
+                case "sqrt":
+                    Console.WriteLine(String.Format("Sqrt = {0}", calc.Sqrt(x)));
+                    break;
+                case "sum":
+                default:
+                    Console.WriteLine(String.Format("Сумма = {0}", calc.Sum(x, y)));
+                    break;
+            }
 
             Console.ReadKey();
         }
@@ -49,10 +67,10 @@ namespace ReactCalc
         /// <param name="arg"></param>
         /// <param name="def">Если не удалось распарсить, то возвращаем это значение</param>
         /// <returns></returns>
-        private static int ToInt(string arg, int def = 100)
+        private static double ToNumber(string arg, double def = 100)
         {
-            int x;
-            if (!int.TryParse(arg, out x))
+            double x;
+            if (!double.TryParse(arg, out x))
             {
                 x = def;
             }
