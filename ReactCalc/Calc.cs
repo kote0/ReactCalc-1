@@ -1,4 +1,6 @@
-﻿namespace ReactCalc
+﻿using System;
+
+namespace ReactCalc
 {
     /// <summary>
     /// Калькулятор
@@ -11,9 +13,19 @@
         /// <param name="x">Слагаемое</param>
         /// <param name="y">Слагаемое</param>
         /// <returns>Целое число</returns>
-        public int Sum(int x, int y)
+        public double Sum(double x, double y)
         {
             return x + y;
+        }
+
+        public double Divide(double x, double y)
+        {
+            return x / y;
+        }
+
+        public double Sqrt(double x)
+        {
+            return Math.Sqrt(x);
         }
 
     }
