@@ -48,7 +48,10 @@ namespace ReactCalc
             {
                 var result = calc.Execute(oper, new[] { x, y });
 
-                Console.WriteLine(String.Format("{0} = {1}", oper, result));
+                Console.WriteLine(String.Format("{0} = {1}", calc.LastOperationName, result));
+                // * 
+                // sum = 5
+                // Сумма = 5
             }
             catch (NotSupportedException ex)
             {
