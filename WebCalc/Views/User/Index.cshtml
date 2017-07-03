@@ -3,17 +3,17 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Пользователи</h1>
 </div>
 
 <div class="row">
 
-    @foreach (var user in ViewBag.Users)
+    @foreach (var user in ViewBag.Users as IEnumerable<DomainModels.Models.User>)
     {
         <div class="col-md-4">
-            <h2><a href="@Url.Action("View", "User", routeValues: new { Id = user.Id })">@user.FIO</a></h2>
+            <h2>
+                @Html.ActionLink(user.FIO, "View", new { user.Id })
+            </h2>
             <p>@user.Login</p>
             <p>@user.Id</p>
         </div>

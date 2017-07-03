@@ -43,6 +43,21 @@
         </dd>
 
     </dl>
+
+    <ul>
+        History:
+        @foreach (var or in Model.OperationResults)
+        {
+            <li>@or.ExecutionDate @or.InputData @or.Result</li>
+        }
+    </ul>
+
+    <ul> Favorites:
+        @foreach (var or in Model.UserFavoriteResults)
+        {
+            <li>@or.Result.Operation.Name @or.Result.Result</li>
+        }
+    </ul>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

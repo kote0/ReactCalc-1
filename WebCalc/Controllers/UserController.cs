@@ -9,7 +9,7 @@ namespace WebCalc.Controllers
 
         public UserController()
         {
-            UserRepository = new UserRepository();
+            UserRepository = new DomainModels.EntityFramework.UserRepository();
         }
 
         public ActionResult Index()
@@ -22,7 +22,7 @@ namespace WebCalc.Controllers
         public ActionResult View(long id)
         {
             var user = UserRepository.Get(id);
-
+            
             return View(user);
         }
 
