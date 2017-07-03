@@ -1,17 +1,13 @@
 ﻿using DomainModels.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebCalc.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         private IUserRepository UserRepository { get; set; }
 
-        public HomeController()
+        public UserController()
         {
             UserRepository = new UserRepository();
         }
@@ -23,11 +19,11 @@ namespace WebCalc.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult View(long id)
         {
-            ViewBag.Message = "Your application description page.";
+            var user = UserRepository.Get(id);
 
-            return View();
+            return View(user);
         }
 
         public ActionResult Contact()

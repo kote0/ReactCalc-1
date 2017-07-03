@@ -13,7 +13,7 @@
     @foreach (var user in ViewBag.Users)
     {
         <div class="col-md-4">
-            <h2>@user.FIO</h2>
+            <h2><a href="@Url.Action("View", "User", routeValues: new { Id = user.Id })">@user.FIO</a></h2>
             <p>@user.Login</p>
             <p>@user.Id</p>
         </div>
