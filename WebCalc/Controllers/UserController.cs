@@ -1,15 +1,17 @@
-﻿using DomainModels.Repository;
+﻿using DomainModels.Models;
+using DomainModels.Repository;
 using System.Web.Mvc;
 
 namespace WebCalc.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private IUserRepository UserRepository { get; set; }
 
-        public UserController()
+        public UserController(IUserRepository UserRepository)
         {
-            UserRepository = new DomainModels.EntityFramework.UserRepository();
+            this.UserRepository = UserRepository;
         }
 
         public ActionResult Index()
@@ -26,11 +28,20 @@ namespace WebCalc.Controllers
             return View(user);
         }
 
-        public ActionResult Contact()
+        [HttpGet]
+        public ActionResult Edit(long id)
         {
-            ViewBag.Message = "Your contact page.";
+            var user = UserRepository.Get(id);
+            return View(user);
+        }
 
-            return View();
+        [HttpPost]
+        public ActionResult Edit(User user)
+        {
+
+            UserRepository.Update(user);
+
+            return RedirectToAction("Index");
         }
     }
 }

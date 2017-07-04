@@ -17,32 +17,40 @@ namespace DomainModels.EntityFramework
 
         public User Create()
         {
-            throw new NotImplementedException();
+            return new User();
         }
 
         public void Delete(User user)
         {
-            throw new NotImplementedException();
+            user.IsDeleted = true;
+            context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
         }
 
         public User Get(long id)
         {
-            return context.Users.FirstOrDefault(u => u.Id == id);
+            return context.Users.FirstOrDefault(u => !u.IsDeleted && u.Id == id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return context.Users.ToList();
+            return context.Users.Where(u => !u.IsDeleted).ToList();
         }
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
         }
 
         public bool Valid(string userName, string password)
         {
-            throw new NotImplementedException();
+            return context.Users.Count(u => !u.IsDeleted && u.Login == userName && u.Password == password) == 1;
+        }
+
+        public User GetByName(string name)
+        {
+            return context.Users.FirstOrDefault(u => !u.IsDeleted && u.Login == name);
         }
     }
 }
