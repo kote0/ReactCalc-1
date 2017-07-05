@@ -27,12 +27,15 @@ namespace WebCalc.Controllers
         public ActionResult Index()
         {
             var model = new CalcModel();
+            model.OperationList = Calc.Operations.Select(o => new SelectListItem() { Text = $"{o.Name}", Value = $"{o.Name}" });
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(CalcModel model)
         {
+            model.OperationList = Calc.Operations.Select(o => new SelectListItem() { Text = $"{o.Name}", Value = $"{o.Name}", Selected = model.Operation == o.Name});
+
             var operation = Calc.Operations.FirstOrDefault(o => o.Name == model.Operation);
             if (operation != null)
             {

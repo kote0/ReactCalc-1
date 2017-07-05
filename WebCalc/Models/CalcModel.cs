@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace WebCalc.Models
 {
     public class CalcModel
     {
+        public CalcModel()
+        {
+            OperationList = new List<SelectListItem>();
+        }
+
         public string Operation { get; set;}
 
         public double? X { get; set; }
@@ -22,5 +25,7 @@ namespace WebCalc.Models
         }
 
         public double? Result { get; set; }
+
+        public IEnumerable<SelectListItem> OperationList { get; set; }
     }
 }
