@@ -13,15 +13,19 @@ namespace WebCalc.Controllers
     public class CalcController : Controller
     {
         private IORRepository ORRepository { get; set; }
-        private IUserRepository userrep { get; set; }
+        private IUserRepository UserRepository { get; set; }
+        private IOperationRepository OperationRepository { get; set; }
 
         private Calc Calc { get; set; }
 
-        public CalcController(IORRepository orrepository, IUserRepository userrep)
+        public CalcController(IORRepository orrepository, 
+            IUserRepository UserRepository, 
+            IOperationRepository OperationRepository)
         {
             Calc = new Calc();
             ORRepository = orrepository;
-            this.userrep = userrep;
+            this.UserRepository = UserRepository;
+            this.OperationRepository = OperationRepository;
         }
 
         public ActionResult Index()
@@ -39,7 +43,8 @@ namespace WebCalc.Controllers
             var operation = Calc.Operations.FirstOrDefault(o => o.Name == model.Operation);
             if (operation != null)
             {
-                var operId = 1;
+                var dbOper = OperationRepository.GetByName(operation.Name);
+                var operId = dbOper.Id;
                 var inputData = string.Join(",", model.Arguments);
 
                 var oldResult = ORRepository.GetOldResult(operId, inputData);
@@ -55,10 +60,9 @@ namespace WebCalc.Controllers
                     var rec = ORRepository.Create();
 
                     // текущего пользователя назначаем автором
-                    var currUser = userrep.GetByName(User.Identity.Name);
+                    var currUser = UserRepository.GetByName(User.Identity.Name);
                     rec.AuthorId = currUser.Id;
 
-                    // ХАК
                     rec.OperationId = operId;
 
                     rec.ExecutionDate = DateTime.Now;

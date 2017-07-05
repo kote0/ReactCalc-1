@@ -48,5 +48,10 @@ namespace DomainModels.EntityFramework
                 : System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
+
+        public Operation GetByName(string name)
+        {
+            return context.Operations.FirstOrDefault(u => u.Name == name);
+        }
     }
 }
