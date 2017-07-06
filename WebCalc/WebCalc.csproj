@@ -197,6 +197,7 @@
     <Content Include="Views\OperationResult\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\User.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Operation.cshtml" />
+    <Content Include="Views\OperationResult\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DomainModels.Models.OperationResult>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Operation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InputData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Result)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExecutionTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExecutionDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExecutionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExecutionDate)
+            </td>
+            <td>
+                <button type="button" class="btn @(item.IsLiked ? "btn-danger" : "btn-success")" onclick="like(this, @item.Id)">@(item.IsLiked ? "dislike" : "like")</button>
+            </td>
+        </tr>
+    }
+
+</table>

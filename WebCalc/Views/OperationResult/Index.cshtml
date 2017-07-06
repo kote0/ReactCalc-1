@@ -10,61 +10,30 @@
     <p class="bg-warning">@(message)</p>
 }
 
-@if(Model == null)
+@if (Model == null)
 {
     return;
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Operation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InputData)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Result)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExecutionTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExecutionDate)
-        </th>
-        <th></th>
-    </tr>
+<div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Operation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InputData)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Result)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExecutionTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExecutionDate)
-        </td>
-        <td>
-            <button type="button" class="btn btn-danger" onclick="like(this, @item.Id)" >@(item.IsLiked ? "dislike" : "like")</button>
-        </td>
-    </tr>
-}
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#all" aria-controls="All" role="tab" data-toggle="tab">Все</a></li>
+        <li role="presentation"><a href="#likes" aria-controls="likes" role="tab" data-toggle="tab">Избранные</a></li>
+    </ul>
 
-</table>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="all">
+            @Html.Partial("List", Model)
+        </div>
+        <div role="tabpanel" class="tab-pane" id="likes">
+            @Html.Partial("List", Model.Where(it => it.IsLiked))
+        </div>
+    </div>
+
+</div>
 
 <script type="text/javascript">
     function like(elem, id) {
@@ -75,6 +44,13 @@
             success: function (msg) {
                 if(msg.Success){
                     $(elem).html(msg.Name);
+
+                    if(msg.Name == "like"){
+                        $(elem).removeClass("btn-danger").addClass("btn-success")
+                    } else {
+                        $(elem).removeClass("btn-success").addClass("btn-danger")
+                    }
+
                 } else {
                     alert(msg.Error);
                 }
